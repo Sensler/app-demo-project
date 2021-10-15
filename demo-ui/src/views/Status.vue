@@ -8,8 +8,7 @@
 <script>
 export default {
   setup(props) {
-    console.log(props);
-    const status = 'UP';
+    const status = 'läuft';
     return { props, status };
   },
 };
