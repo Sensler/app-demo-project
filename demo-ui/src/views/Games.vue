@@ -14,7 +14,8 @@
         </tr>
       </tbody>
     </table>
-    <button type="submit" @click.prevent="getGames" value="update">Aktualisieren</button>
+    <button class="button button1" type="submit" @click.prevent="getGames" value="update">Aktualisieren</button>
+
     <div class="error">{{ error }}</div>
   </div>
 </template>
@@ -52,5 +53,56 @@ export default {
 <style>
 .error {
   background-color: red;
+}
+
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #04aa6d;
+  color: white;
+}
+
+button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid #4caf50;
+}
+.button1:hover {
+  background-color: #4caf50;
+  color: white;
 }
 </style>
