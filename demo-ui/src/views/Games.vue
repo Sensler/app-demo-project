@@ -7,7 +7,7 @@
         <th>Publisher</th>
       </thead>
       <tbody>
-        <tr v-for="game in games" :key="game.id">
+        <tr v-for="game in games" :key="game.id" @click.left="pushRoute('DetailGame', { id: game.id })">
           <td>{{ game.id }}</td>
           <td>{{ game.name }}</td>
           <td>{{ game.publisher }}</td>
@@ -15,14 +15,16 @@
       </tbody>
     </table>
     <button class="button button1" type="submit" @click.prevent="getGames" value="update">Aktualisieren</button>
+    <button class="button button1" type="submit" @click.prevent="pushRoute('AddGame')" value="update">Spiel hinzufügen</button>
 
-    <div class="error">{{ error }}</div>
+    <div v-if="error" class="error">{{ error }}</div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Games',
@@ -41,11 +43,21 @@ export default {
         error.value = e.message;
       }
     };
+
+    const router = useRouter();
+    function pushRoute(route, params) {
+      router.push({ name: route, params });
+    }
     onMounted(() => {
       getGames();
     });
 
-    return { games, error, getGames };
+    return {
+      games,
+      error,
+      getGames,
+      pushRoute,
+    };
   },
 };
 </script>
@@ -67,6 +79,9 @@ th {
   padding: 8px;
 }
 
+tr {
+  cursor: pointer;
+}
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
