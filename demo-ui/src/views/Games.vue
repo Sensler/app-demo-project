@@ -7,7 +7,12 @@
         <th>Publisher</th>
       </thead>
       <tbody>
-        <tr v-for="game in games" :key="game.id" @click.left="pushRoute('DetailGame', { id: game.id })">
+        <tr
+          v-for="game in games"
+          :key="game.id"
+          @click.left="pushRoute('DetailGame', { id: game.id })"
+          @click.right.prevent="deleteGame(game.id)"
+        >
           <td>{{ game.id }}</td>
           <td>{{ game.name }}</td>
           <td>{{ game.publisher }}</td>
@@ -44,6 +49,23 @@ export default {
       }
     };
 
+    const deleteGame = async (id) => {
+      // eslint-disable-next-line no-restricted-globals
+      const verification = confirm(`Willst du wirklich das Spiel mit der id ${id} löschen?`);
+      if (!verification) {
+        return;
+      }
+
+      await axios({
+        url: `/api/games/${id}`,
+        method: 'delete',
+      });
+      // Ich kann faul seinn und rufe die Liste einfach neu ab, hier kann man auch frontendseitig sich das herausschnippeln
+      // getGames();
+
+      games.value = games.value.filter((g) => g.id !== id);
+    };
+
     const router = useRouter();
     function pushRoute(route, params) {
       router.push({ name: route, params });
@@ -57,6 +79,7 @@ export default {
       error,
       getGames,
       pushRoute,
+      deleteGame,
     };
   },
 };
